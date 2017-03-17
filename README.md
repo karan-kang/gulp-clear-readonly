@@ -1,6 +1,8 @@
 Utility to clear read-only flag from actual files in both Windows and Linux environments
 
 
+[![Build Status](https://travis-ci.org/Karankang007/gulp-clear-readonly.svg?branch=master)](https://travis-ci.org/Karankang007/gulp-clear-readonly)
+
 ## Installation
 Install package with NPM and add it to your development dependencies:
 
