@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/Karankang007/gulp-clear-readonly/issues"
   },
-  "homepage": "https://github.com/Karankang007/gulp-clear-readonly#readme"
+  "homepage": "https://github.com/Karankang007/gulp-clear-readonly#readme",
+  "dependencies": {
+    "gulp-util": "^3.0.7"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1"
+  }
 }
