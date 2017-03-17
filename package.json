@@ -1,0 +1,22 @@
+{
+  "name": "gulp-clear-readonly",
+  "version": "0.1.0",
+  "description": "Utility to clear read-only flag from actual files in both Windows and Linux environments",
+  "main": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Karankang007/gulp-clear-readonly.git"
+  },
+  "keywords": [
+    "gulpplugin"
+  ],
+  "author": "Karanvir Kang <karankang007@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Karankang007/gulp-clear-readonly/issues"
+  },
+  "homepage": "https://github.com/Karankang007/gulp-clear-readonly#readme"
+}
