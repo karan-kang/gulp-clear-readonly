@@ -31,3 +31,6 @@ gulp.task('clearReadOnlyWithDebug', function(done){
 
 ```
 
+## Pass-through callback result
+
+If the specified callback returns a result, the same result will be pass-throughed clearReadOnly function call.
