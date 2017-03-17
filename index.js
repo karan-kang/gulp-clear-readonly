@@ -9,29 +9,30 @@ var debug = gutil.log;
  * @param {string} path - Folder from which read-only flag needs to be cleared
  * @param {function} callback - Callback function to invoke
  * @param {Object} opts - Plugin options { isFile, debug }
+ * @return {Object} callback result if any
  */
 function clearReadOnly(path, callback, providedOptions) {
 	var options = getOptions(providedOptions);
 	debug = options.debug ? gutil.log : function (){};
 	debug(moduleName, 'Clearing read-only flag for path: ' + path + '...');
-
+	
+	var callbackResult;
 	var clearReadOnlyCommand = getCommand(path, !options.isFile);
-	cp.exec(clearReadOnlyCommand, function (error) {
-		// We only care about errors for this command
-		if (error) {
-			// Handle failure scenario
-			debug(moduleName, error);
-			throw new gutil.PluginError(moduleName, 'Failed to clear read only flag.');
-		} else {
-			// Mark this asynchronous task as completed
-			debug(moduleName, 'Cleared read-only flag for path: ' + path);
-
-			// Invoke callback
-			if (callback) {
-				callback();
-			}
-		}
-	});
+	try
+	{
+		cp.execSync(clearReadOnlyCommand);
+		// Mark this asynchronous task as completed
+		debug(moduleName, 'Cleared read-only flag for path: ' + path);
+	    if (typeof(callback) == 'function') {
+			callbackResult = callback();
+		}		
+	} catch (error) {
+		// Handle failure scenario
+		debug(moduleName, error);
+		throw new gutil.PluginError(moduleName, 'Failed to clear read only flag.');
+	}
+	
+	return callbackResult;
 }
 
 /**
