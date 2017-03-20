@@ -23,13 +23,20 @@ function clearReadOnly(path, callback, providedOptions) {
 		cp.execSync(clearReadOnlyCommand);
 		// Mark this asynchronous task as completed
 		debug(moduleName, 'Cleared read-only flag for path: ' + path);
-	    if (typeof(callback) == 'function') {
-			callbackResult = callback();
-		}		
 	} catch (error) {
 		// Handle failure scenario
 		debug(moduleName, error);
 		throw new gutil.PluginError(moduleName, 'Failed to clear read only flag.');
+	}
+	
+	if (typeof(callback) == 'function') {
+		try
+		{
+			callbackResult = callback();
+		} catch (error) {
+			debug(moduleName, error);
+			throw new gutil.PluginError(moduleName, 'An error occurred while trying to execute callback.');
+		}
 	}
 	
 	return callbackResult;
