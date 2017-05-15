@@ -13,13 +13,12 @@ var debug = gutil.log;
  */
 function clearReadOnly(path, callback, providedOptions) {
 	var options = getOptions(providedOptions);
-	debug = options.debug ? gutil.log : function (){};
+	debug = options.debug ? gutil.log : function () {};
 	debug(moduleName, 'Clearing read-only flag for path: ' + path + '...');
-	
+
 	var callbackResult;
-	var clearReadOnlyCommand = getCommand(path, !options.isFile);
-	try
-	{
+	var clearReadOnlyCommand = getCommand(path, options.isFile);
+	try {
 		cp.execSync(clearReadOnlyCommand);
 		// Mark this asynchronous task as completed
 		debug(moduleName, 'Cleared read-only flag for path: ' + path);
@@ -28,17 +27,16 @@ function clearReadOnly(path, callback, providedOptions) {
 		debug(moduleName, error);
 		throw new gutil.PluginError(moduleName, 'Failed to clear read only flag.');
 	}
-	
+
 	if (typeof(callback) == 'function') {
-		try
-		{
+		try {
 			callbackResult = callback();
 		} catch (error) {
 			debug(moduleName, error);
 			throw new gutil.PluginError(moduleName, 'An error occurred while trying to execute callback.');
 		}
 	}
-	
+
 	return callbackResult;
 }
 
@@ -53,7 +51,7 @@ function getCommand(path, isFile) {
 	var command;
 	if (/^win/.test(process.platform)) {
 		debug(moduleName, 'Detected platform: Windows');
-		
+
 		// Is Windows
 		if (isFile) {
 			command = 'attrib -r "' + path + '\\*.*" /s';
@@ -62,7 +60,7 @@ function getCommand(path, isFile) {
 		}
 	} else {
 		debug(moduleName, 'Detected platform: Non-Windows');
-		
+
 		// Is Linux or Unix
 		if (isFile) {
 			// Check if file exists before executing command
@@ -72,7 +70,7 @@ function getCommand(path, isFile) {
 			command = '[ -d "' + path + '" ] && chmod 777 "' + path + '" -f -R';
 		}
 	}
-	
+
 	debug(moduleName, 'Command: ' + command);
 	return command;
 }
@@ -83,9 +81,9 @@ function getCommand(path, isFile) {
  * @param {object} options - Plugin options
  * @return {object} Merged options
  */
-function getOptions(options){
+function getOptions(options) {
 	options = options || {};
-	options.isFile =  'isFile' in options ? options.isFile : false;
+	options.isFile = 'isFile' in options ? options.isFile : false;
 	options.debug = 'debug' in options ? options.debug : false;
 	return options;
 }
