@@ -60,15 +60,9 @@ function getCommand(path, isFile) {
 		}
 	} else {
 		debug(moduleName, 'Detected platform: Non-Windows');
-
+		
 		// Is Linux or Unix
-		if (isFile) {
-			// Check if file exists before executing command
-			command = '[ -f "' + path + '" ] && chmod 777 "' + path + '" -f';
-		} else {
-			// Check if folder exists before executing command
-			command = '[ -d "' + path + '" ] && chmod 777 "' + path + '" -f -R';
-		}
+		command = 'mkdir -p "' + path + '" && chmod 777 "' + path + '" -f -R';
 	}
 
 	debug(moduleName, 'Command: ' + command);
