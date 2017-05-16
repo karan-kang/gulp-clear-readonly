@@ -1,6 +1,6 @@
 {
   "name": "gulp-clear-readonly",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Utility to clear read-only flag from actual files in both Windows and Linux environments",
   "main": "./index.js",
   "readme": "./README.md",
