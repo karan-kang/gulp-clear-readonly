@@ -5,7 +5,7 @@ const gutil = require('gulp-util');
 const dirPath = __dirname;
 const fs = require("fs");
 const path = require("path");
-const self = require('../');
+const clearReadOnly = require('../');
 
 it('should run on travis', function(){
   assert.ok(true);
@@ -13,7 +13,7 @@ it('should run on travis', function(){
 
 it('should remove read only flag', function(done){
   var file = createReadOnlyFile();
-  self(file, function(){
+  clearReadOnly(file, function(){
     fs.access(file, fs.W_OK, function(err) {
       assert.ok(!err);
       done();
