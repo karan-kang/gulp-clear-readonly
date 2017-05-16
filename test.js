@@ -30,6 +30,6 @@ function createReadOnlyFile(){
   fs.writeFileSync(filePath, fileName);
   
   // Mark file permissions as readonly
-  fs.chmodSync(filePath, 0444);
+  fs.chmodSync(filePath, '444');
   return filePath;
 }
