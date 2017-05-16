@@ -6,6 +6,7 @@ const dirPath = __dirname;
 const fs = require("fs");
 const path = require("path");
 const clearReadOnly = require('./');
+const genPathIndex = 0;
 
 it('should run on travis', function(){
   assert.ok(true);
@@ -33,10 +34,24 @@ it('should remove read only flag from a folder', function(done){
   });
 });
 
+it('should handle non existing folder', function(done){
+  var folder = ;
+  clearReadOnly(folder, function(){
+    fs.access(folder, fs.W_OK, function(err) {
+      assert.ok(!err);
+      done();
+    });
+  });
+});
+
+// Generate a one time path for use during testing
+function generatePath(folder){
+  return path.join(__dirname, 'test_' + Date.now() + String(genPathIndex++) + (folder ? '_dir' : '_file'));
+}
 
 // Generated a sample file or folder for our testing
 function createReadOnly(folder){
-  var genPath = path.join(__dirname, 'test_' + Date.now() + (folder ? '_dir' : '_file'));
+  var genPath = generatePath(folder);
   if (folder) {
       fs.mkdirSync(genPath);
   } else {
