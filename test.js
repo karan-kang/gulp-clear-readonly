@@ -6,6 +6,7 @@ const dirPath = __dirname;
 const fs = require("fs");
 const path = require("path");
 const clearReadOnly = require('./');
+const generatedFiles = [];
 
 it('should run on travis', function(){
   assert.ok(true);
@@ -23,7 +24,20 @@ it('should remove read only flag', function(done){
   });
 });
 
-// TODO: Tests will be added here once i have some time.
+// Clean up generated files
+after(function(){
+  generatedFiles.forEach(function(filePath){
+    try
+    {
+      fs.unlinkSync(filePath);
+    } catch (err) {
+      // Ignore error
+    }
+  });
+  generatedFiles.length = 0;
+});
+
+// Generated a sample file for our testing
 function createReadOnlyFile(){
   var fileName = 'Test' + Date.now();
   var filePath = path.join(__dirname, fileName);
@@ -31,5 +45,6 @@ function createReadOnlyFile(){
   
   // Mark file permissions as readonly
   fs.chmodSync(filePath, '444');
+  generatedFiles.push(filePath);
   return filePath;
 }
