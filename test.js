@@ -6,14 +6,13 @@ const dirPath = __dirname;
 const fs = require("fs");
 const path = require("path");
 const clearReadOnly = require('./');
-const generatedFiles = [];
 
 it('should run on travis', function(){
   assert.ok(true);
 });
 
-it('should remove read only flag', function(done){
-  var file = createReadOnlyFile();
+it('should remove read only flag from a file', function(done){
+  var file = createReadOnly();
   clearReadOnly(file, function(){
     fs.access(file, fs.W_OK, function(err) {
       assert.ok(!err);
@@ -24,27 +23,33 @@ it('should remove read only flag', function(done){
   });
 });
 
-// Clean up generated files
-after(function(){
-  generatedFiles.forEach(function(filePath){
-    try
-    {
-      fs.unlinkSync(filePath);
-    } catch (err) {
-      // Ignore error
-    }
+it('should remove read only flag from a folder', function(done){
+  var folder = createReadOnly(true);
+  clearReadOnly(folder, function(){
+    fs.access(folder, fs.W_OK, function(err) {
+      assert.ok(!err);
+      done();
+    });
   });
-  generatedFiles.length = 0;
 });
 
-// Generated a sample file for our testing
-function createReadOnlyFile(){
-  var fileName = 'Test' + Date.now();
-  var filePath = path.join(__dirname, fileName);
-  fs.writeFileSync(filePath, fileName);
+
+// Generated a sample file or folder for our testing
+function createReadOnly(folder){
+  var path;
+  var name = 'Test' + Date.now();
+  var path = path.join(__dirname, name);
+  if (folder) {
+      path = path + '_dir';
+      fs.mkdirSync(path);
+  } else {
+      path = path + '_file';
+      fs.writeFileSync(path, path);
+  }
   
-  // Mark file permissions as readonly
-  fs.chmodSync(filePath, '444');
-  generatedFiles.push(filePath);
-  return filePath;
+  // Mark file/folder permissions as readonly
+  fs.chmodSync(path, '444');
+  return path;
 }
+
+
