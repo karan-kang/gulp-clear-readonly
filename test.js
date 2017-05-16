@@ -36,20 +36,19 @@ it('should remove read only flag from a folder', function(done){
 
 // Generated a sample file or folder for our testing
 function createReadOnly(folder){
-  var path;
   var name = 'Test' + Date.now();
-  var path = path.join(__dirname, name);
+  var genPath = path.join(__dirname, name);
   if (folder) {
-      path = path + '_dir';
-      fs.mkdirSync(path);
+      genPath = genPath + '_dir';
+      fs.mkdirSync(genPath);
   } else {
-      path = path + '_file';
-      fs.writeFileSync(path, path);
+      genPath = genPath + '_file';
+      fs.writeFileSync(genPath, genPath);
   }
   
   // Mark file/folder permissions as readonly
-  fs.chmodSync(path, '444');
-  return path;
+  fs.chmodSync(genPath, '444');
+  return genPath;
 }
 
 
