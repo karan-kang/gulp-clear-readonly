@@ -35,12 +35,18 @@ it('should remove read only flag from a folder', function(done){
 });
 
 it('should handle non existing folder', function(done){
-  var folder = ;
+  var folder = generatePath(true) + '_DNE';
   clearReadOnly(folder, function(){
-    fs.access(folder, fs.W_OK, function(err) {
-      assert.ok(!err);
+      assert.ok(true);
       done();
-    });
+  });
+});
+
+it('should handle non existing file', function(done){
+  var file = generatePath() + '_DNE';
+  clearReadOnly(file, function(){
+      assert.ok(true);
+      done();
   });
 });
 
