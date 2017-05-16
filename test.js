@@ -5,7 +5,7 @@ const gutil = require('gulp-util');
 const dirPath = __dirname;
 const fs = require("fs");
 const path = require("path");
-const clearReadOnly = require('../');
+const clearReadOnly = require('./');
 
 it('should run on travis', function(){
   assert.ok(true);
