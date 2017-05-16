@@ -6,14 +6,14 @@ const dirPath = __dirname;
 const fs = require("fs");
 const path = require("path");
 const clearReadOnly = require('./');
-const genPathIndex = 0;
+let genPathIndex = 0;
 
 it('should run on travis', function(){
   assert.ok(true);
 });
 
 it('should remove read only flag from a file', function(done){
-  var file = createReadOnly();
+  const file = createReadOnly();
   clearReadOnly(file, function(){
     fs.access(file, fs.W_OK, function(err) {
       assert.ok(!err);
@@ -25,7 +25,7 @@ it('should remove read only flag from a file', function(done){
 });
 
 it('should remove read only flag from a folder', function(done){
-  var folder = createReadOnly(true);
+  const folder = createReadOnly(true);
   clearReadOnly(folder, function(){
     fs.access(folder, fs.W_OK, function(err) {
       assert.ok(!err);
@@ -35,7 +35,7 @@ it('should remove read only flag from a folder', function(done){
 });
 
 it('should handle non existing folder', function(done){
-  var folder = generatePath(true) + '_DNE';
+  const folder = generatePath(true) + '_DNE';
   clearReadOnly(folder, function(){
       assert.ok(true);
       done();
@@ -43,7 +43,7 @@ it('should handle non existing folder', function(done){
 });
 
 it('should handle non existing file', function(done){
-  var file = generatePath() + '_DNE';
+  const file = generatePath() + '_DNE';
   clearReadOnly(file, function(){
       assert.ok(true);
       done();
@@ -57,7 +57,7 @@ function generatePath(folder){
 
 // Generated a sample file or folder for our testing
 function createReadOnly(folder){
-  var genPath = generatePath(folder);
+  const genPath = generatePath(folder);
   if (folder) {
       fs.mkdirSync(genPath);
   } else {
