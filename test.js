@@ -36,13 +36,10 @@ it('should remove read only flag from a folder', function(done){
 
 // Generated a sample file or folder for our testing
 function createReadOnly(folder){
-  var name = 'Test' + Date.now();
-  var genPath = path.join(__dirname, name);
+  var genPath = path.join(__dirname, 'test_' + Date.now() + (folder ? '_dir' : '_file'));
   if (folder) {
-      genPath = genPath + '_dir';
       fs.mkdirSync(genPath);
   } else {
-      genPath = genPath + '_file';
       fs.writeFileSync(genPath, genPath);
   }
   
