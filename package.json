@@ -24,6 +24,7 @@
     "gulp-util": "^3.0.7"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "path": "~0.12.7"
   }
 }
