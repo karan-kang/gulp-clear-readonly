@@ -62,7 +62,7 @@ function getCommand(path, isFile) {
 		debug(moduleName, 'Detected platform: Non-Windows');
 		
 		// Is Linux or Unix
-		command = 'mkdir -p "' + path + '" && chmod 777 "' + path + '" -f -R';
+		command = '[ -e "' + path + '" ] && chmod 777 "' + path + '" -f -R';
 	}
 
 	debug(moduleName, 'Command: ' + command);
