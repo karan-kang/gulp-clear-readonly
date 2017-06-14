@@ -1,5 +1,6 @@
 var gutil = require('gulp-util');
 var cp = require('child_process');
+var syncExec = require('sync-exec');
 var moduleName = 'gulp-clear-readonly';
 var debug = gutil.log;
 
@@ -19,7 +20,13 @@ function clearReadOnly(path, callback, providedOptions) {
 	var callbackResult;
 	var clearReadOnlyCommand = getCommand(path, options.isFile);
 	try {
-		cp.execSync(clearReadOnlyCommand);
+		// Use the native execSync if it is available on current node 
+		// platform, else use an external library
+		if (cp.execSync) {
+			cp.execSync(clearReadOnlyCommand);
+		} else {
+			syncExec(clearReadOnlyCommand);
+		}
 		// Mark this asynchronous task as completed
 		debug(moduleName, 'Cleared read-only flag for path: ' + path);
 	} catch (error) {
